@@ -1,27 +1,20 @@
-FROM ubuntu:latest as builder
+FROM alpine:latest as builder
 
-RUN apt-get update
-RUN apt-get install curl -y
-RUN curl -L -o /tmp/go.sh https://install.direct/go.sh
-RUN chmod +x /tmp/go.sh
-RUN /tmp/go.sh
+RUN apk update \
+    && apk add --no-cache \
+    curl \
+    bash \
+    && curl -fsSL https://install.direct/go.sh | bash
 
-FROM alpine:latest
+FROM scratch
 
 LABEL maintainer "Darian Raymond <admin@v2ray.com>"
 
-COPY --from=builder /usr/bin/v2ray/v2ray /usr/bin/v2ray/
-COPY --from=builder /usr/bin/v2ray/v2ctl /usr/bin/v2ray/
-COPY --from=builder /usr/bin/v2ray/geoip.dat /usr/bin/v2ray/
-COPY --from=builder /usr/bin/v2ray/geosite.dat /usr/bin/v2ray/
-COPY config.json /etc/v2ray/config.json
-
-RUN set -ex && \
-    apk --no-cache add ca-certificates && \
-    mkdir /var/log/v2ray/ &&\
-    chmod +x /usr/bin/v2ray/v2ctl && \
-    chmod +x /usr/bin/v2ray/v2ray
+COPY --from=builder /usr/bin/v2ray /usr/bin/v2ray
+COPY --from=builder /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/ca-certificates.crt
+COPY --from=builder /etc/v2ray/config.json /etc/v2ray/config.json
 
 ENV PATH /usr/bin/v2ray:$PATH
 
-CMD ["v2ray", "-config=/etc/v2ray/config.json"]
+ENTRYPOINT [ "v2ray" ]
+CMD ["-config=/etc/v2ray/config.json"]
