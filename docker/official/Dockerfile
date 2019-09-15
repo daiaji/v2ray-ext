@@ -4,7 +4,8 @@ RUN apk update \
     && apk add --no-cache \
     curl \
     bash \
-    && curl -fsSL https://install.direct/go.sh | bash
+    && curl -fsSL https://install.direct/go.sh | bash \
+    && curl -fsSLo /usr/bin/v2ray/h2y.dat https://raw.githubusercontent.com/ToutyRater/V2Ray-SiteDAT/master/geofiles/h2y.dat
 
 FROM scratch
 
