@@ -1,7 +1,7 @@
 FROM alpine AS builder
 
 RUN apk update \
-    && apk add --no-cache curl bash ca-certificates \
+    && apk add --no-cache bash ca-certificates curl unzip \
     && curl $CURLPROXY -fsSL https://install.direct/go.sh | bash -s -- $V2RAYPROXY \
     && curl $CURLPROXY -fsSLo /usr/bin/v2ray/h2y.dat https://raw.githubusercontent.com/ToutyRater/V2Ray-SiteDAT/master/geofiles/h2y.dat
 
