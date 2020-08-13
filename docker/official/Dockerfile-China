@@ -15,6 +15,7 @@ LABEL maintainer "Darian Raymond <admin@v2ray.com>"
 COPY --from=builder /usr/bin/v2ray/ /usr/bin/v2ray/
 COPY --from=builder /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/ca-certificates.crt
 COPY --from=builder /etc/v2ray/config.json /etc/v2ray/config.json
+COPY --from=builder /usr/bin/v2ray/h2y.dat /usr/bin/v2ray/h2y.dat
 
 ENV PATH /usr/bin/v2ray:$PATH
 
