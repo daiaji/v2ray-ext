@@ -1,7 +1,8 @@
-FROM --platform=${TARGETPLATFORM} alpine AS builder
+FROM alpine AS builder
 
 WORKDIR /root
 ARG TARGETPLATFORM
+RUN echo $TARGETPLATFORM
 RUN apk update \
     && apk add --no-cache bash tzdata openssl ca-certificates curl unzip \
     && curl -fsSL https://raw.githubusercontent.com/v2fly/docker/master/v2ray.sh | bash -s ${TARGETPLATFORM} \
