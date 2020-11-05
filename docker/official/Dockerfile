@@ -5,7 +5,7 @@ ARG TARGETPLATFORM
 RUN echo $TARGETPLATFORM
 RUN apk update \
     && apk add --no-cache bash tzdata openssl ca-certificates curl unzip \
-    && curl -fsSL https://raw.githubusercontent.com/v2fly/docker/master/v2ray.sh | bash -s ${TARGETPLATFORM} \
+    && curl -fsSL https://raw.githubusercontent.com/daiaji/docker/master/v2ray.sh | bash \
     && curl -fsSLo /usr/local/share/v2ray/h2y.dat https://raw.githubusercontent.com/ToutyRater/V2Ray-SiteDAT/master/geofiles/h2y.dat
 
 FROM scratch
