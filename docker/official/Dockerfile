@@ -1,10 +1,9 @@
 FROM alpine AS builder
 
 WORKDIR /root
-ARG TARGETPLATFORM
-RUN echo $TARGETPLATFORM
 RUN apk update \
     && apk add --no-cache bash tzdata openssl ca-certificates curl unzip \
+    && mkdir -p /etc/v2ray /usr/local/share/v2ray /var/log/v2ray \
     && curl -fsSL https://raw.githubusercontent.com/daiaji/docker/master/v2ray.sh | bash \
     && curl -fsSLo /usr/local/share/v2ray/h2y.dat https://raw.githubusercontent.com/ToutyRater/V2Ray-SiteDAT/master/geofiles/h2y.dat
 
